@@ -4,51 +4,51 @@ import java.util.Scanner;
 
 public class Utils {
 	
-	static Scanner teclado = new Scanner(System.in);
+	static Scanner input = new Scanner(System.in);
 	
-	public static void conectando() {
-		System.out.println("Conectando...");
+	public static void connecting() {
+		System.out.println("Connecting...");
 	}
 	
-	public static void desconectando() {
-		System.out.println("Desconectando...");
+	public static void disconnecting() {
+		System.out.println("Disconnecting...");
 	}
 	
-	public static  void listar () {
-		System.out.println("Listando produtos...");
+	public static  void list () {
+		System.out.println("List products...");
 	}
 	
-	public static void inserir() {
-		System.out.println("Inserindo produtos...");
+	public static void insert() {
+		System.out.println("Insert products...");
 	}
 	
-	public static void atualizar() {
-		System.out.println("Atualizando produtos...");
+	public static void updating() {
+		System.out.println("Updating products...");
 	}
 	
-	public static void deletar() {
-		System.out.println("Deletando produtos...");
+	public static void delete() {
+		System.out.println("Delete products...");
 	}
 	
 	public static void menu() {
-		System.out.println("==================Gerenciamento de Produtos===============");
-		System.out.println("Selecione uma opÁ„o: ");
-		System.out.println("1 - Listar produtos.");
-		System.out.println("2 - Inserir produtos.");
-		System.out.println("3 - Atualizar produtos.");
-		System.out.println("4 - Deletar produtos.");
+		System.out.println("==================Product Management===============");
+		System.out.println("Select an option: ");
+		System.out.println("1 - List products.");
+		System.out.println("2 - Insert products.");
+		System.out.println("3 - Updating products.");
+		System.out.println("4 - Delete products.");
 		
-		int opcao = Integer.parseInt(teclado.nextLine());
-		if(opcao == 1) {
-			listar();
-		}else if(opcao == 2) {
-			inserir();
-		}else if(opcao == 3) {
-			atualizar();
-		}else if(opcao == 4) {
-			deletar();
+		int option = Integer.parseInt(input.nextLine());
+		if(option == 1) {
+			list();
+		}else if(option == 2) {
+			insert();
+		}else if(option == 3) {
+			updating();
+		}else if(option == 4) {
+			delete();
 		}else {
-			System.out.println("Op√ß√£o inv√°lida.");
+			System.out.println("Invalid option.");
 		}
 	}
 }
