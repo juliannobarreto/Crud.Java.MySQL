@@ -138,8 +138,10 @@ public class Utils {
 				String ATUALIZAR = "UPDATE produto SET nome=?, preco=?, estoque=? WHERE id=?";
 				PreparedStatement upd = conn.prepareStatement(ATUALIZAR);
 				
-				
-			}else {
+				upd.setString(1, name);
+				upd.setFloat(2, price);
+				upd.setInt(3, inventory);
+				upd.setInt(4, id);
 				System.out.println("There is no product with the entered id.");
 			}
 			
