@@ -42,7 +42,7 @@ public class Utils {
 	}
 	
 	public static  void list () {
-		String BUSCAR_TODOS = "SELECT * FROM products";
+		String BUSCAR_TODOS = "SELECT * FROM produtos";
 		
 		try {
 			Connection conn = connecting();
@@ -79,29 +79,29 @@ public class Utils {
 	
 	public static void insert() {
 		System.out.println("Enter the product name. ");
-		String name = input.nextLine();
+		String nome = input.nextLine();
 		
 		System.out.println("Enter the product price. ");
-		float price = input.nextFloat();
+		float preco = input.nextFloat();
 		
 		System.out.println("Inform the quantity of the product.");
-		int inventory = input.nextInt();
+		int estoque = input.nextInt();
 		
-		String INSERT = "INSERT INTO product (name, price, inventory) VALUES (?, ?, ?)";
+		String INSERT = "INSERT INTO produtos (nome, preco, estoque) VALUES (?, ?, ?)";
 		// SQL Injection
 		
 		try {
 			Connection conn = connecting();
 			PreparedStatement salve = conn.prepareStatement(INSERT);
 			
-			salve.setString(1, name);
-			salve.setFloat(2, price);
-			salve.setInt(3, inventory);
+			salve.setString(1, nome);
+			salve.setFloat(2, preco);
+			salve.setInt(3, estoque);
 			
 			salve.executeLargeUpdate();
 			salve.close();
 			disconnecting(conn);
-			System.out.println("The product " + name + " was entered successfully.");
+			System.out.println("The product " + nome + " was entered successfully.");
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("Error saving the product.");
@@ -127,30 +127,69 @@ public class Utils {
 			
 			if(qtd > 0) {
 				System.out.println("Enter the product name: ");
-				String name = input.nextLine();
+				String nome = input.nextLine();
 				
 				System.out.println("Inform the price of the product: ");
-				float price = input.nextFloat();
+				float preco = input.nextFloat();
 				
 				System.out.println("Inform quantity in stock.");
-				int inventory = input.nextInt();
+				int estoque = input.nextInt();
 				
 				String ATUALIZAR = "UPDATE produto SET nome=?, preco=?, estoque=? WHERE id=?";
 				PreparedStatement upd = conn.prepareStatement(ATUALIZAR);
 				
-				upd.setString(1, name);
-				upd.setFloat(2, price);
-				upd.setInt(3, inventory);
+				upd.setString(1, nome);
+				upd.setFloat(2, preco);
+				upd.setInt(3, estoque);
 				upd.setInt(4, id);
+				
+				upd.executeUpdate();
+				upd.close();
+				disconnecting(conn);
+				System.out.println("O produto " + nome + "foi atualizado com sucesso.");
+			}else {
 				System.out.println("There is no product with the entered id.");
 			}
-			
+							
 		} catch (Exception e) {
-					}
+			e.printStackTrace();
+			System.err.println("Erro ao atualizar o produto");
+			System.exit(-42);
+		}	
 	}
 	
 	public static void delete() {
-		System.out.println("Delete products...");
+		String DELETAR = "DELETE FROM produtos WHERE id=?";
+		String BUSCAR_POR_ID = "SELECT * FROM produtos WHERE id=?";
+		
+		System.out.println("Informe o codigo do produto: ");
+		int id = Integer.parseInt(input.nextLine());
+		
+		try {
+			Connection conn = connecting();
+			PreparedStatement produto = conn.prepareStatement(BUSCAR_POR_ID);
+			produto.setInt(1, id);
+			ResultSet res = produto.executeQuery();
+			
+			res.last();
+			int qtd = res.getRow();
+			res.beforeFirst();
+			
+			if (qtd > 0) {
+				PreparedStatement del = conn.prepareStatement(DELETAR);
+				del.setInt(1, id);
+				del.executeUpdate();
+				del.close();
+				disconnecting(conn);
+				System.out.println("The product was successfully deleted.");
+			}else {
+				System.out.println("There is no product with an informed id.");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Error deleting product.");
+			System.exit(-42);
+		}
 	}
 	
 	public static void menu() {
